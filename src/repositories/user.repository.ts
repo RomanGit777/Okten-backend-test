@@ -1,10 +1,14 @@
-import {IUser} from "../interfaces/user.interface";
+import {IUser, IUserCreateDTO} from "../interfaces/user.interface";
 import {User} from "../models/user.model";
 
 class UserRepository {
 
-    public getByEmail(email: string): Promise<IUser> {
-        return User.findOne({ email })
+    public create(user: IUserCreateDTO): Promise<IUser>{
+        return User.create(user);
+    }
+
+    public async getByEmail(email: string): Promise<IUser | null> {
+        return User.findOne({email});
     }
 }
 
