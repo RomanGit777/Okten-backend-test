@@ -12,7 +12,8 @@
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.4.1",
-    "openssl": "^2.0.0"
+    "openssl": "^2.0.0",
+    "joi": "^18.1.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
