@@ -9,6 +9,26 @@ class UserService {
         return userRepository.create(user);
     }
 
+    public getById(userId: string): Promise<IUser | null> {
+        const user = userRepository.getById(userId);
+
+        if (!user) {
+            throw new ApiError("User not found", StatusCodesEnum.NOT_FOUND);
+        }
+
+        return user;
+
+    }
+
+    public async isActive(userId: string) {
+        const user = await this.getById(userId);
+
+        if (user) {
+            return user.isActive;
+        }
+
+    }
+
     public async isEmailExists(email: string): Promise<void>{
         const user = await userRepository.getByEmail(email);
 

@@ -7,6 +7,10 @@ class UserRepository {
         return User.create(user);
     }
 
+    public async getById(userId: string): Promise<IUser | null>{
+        return User.findById(userId);
+    }
+
     public async getByEmail(email: string): Promise<IUser | null> {
         return User.findOne({email});
     }
