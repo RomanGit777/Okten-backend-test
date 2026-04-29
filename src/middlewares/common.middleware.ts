@@ -10,7 +10,7 @@ class CommonMiddleware {
                 next();
             } catch (e) {
                 if (e instanceof ValidationError) {
-                    next(new ApiError(e.details[0].message, 400));
+                    return next(new ApiError(e.details[0].message, 400));
                 }
                 next(e);
             }
