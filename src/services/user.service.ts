@@ -9,8 +9,8 @@ class UserService {
         return userRepository.create(user);
     }
 
-    public getById(userId: string): Promise<IUser | null> {
-        const user = userRepository.getById(userId);
+    public async getById(userId: string): Promise<IUser> {
+        const user = await userRepository.getById(userId);
 
         if (!user) {
             throw new ApiError("User not found", StatusCodesEnum.NOT_FOUND);

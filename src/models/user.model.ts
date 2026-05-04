@@ -11,7 +11,7 @@ const UserSchema = new Schema({
         password: {type: String, required: true},
         region: {type: String, required: true},
 
-        role: {type: String, enum: RoleEnum, default: RoleEnum.USER},
+        role: {type: String, enum: RoleEnum, default: RoleEnum.BUYER},
         accountType: {type: String, enum: AccountTypeEnum, default: AccountTypeEnum.BASIC},
 
         isActive: {type: Boolean, default: true},

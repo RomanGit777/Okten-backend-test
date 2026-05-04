@@ -22,5 +22,3 @@ export class UserValidator {
         password: this.password.required(),
     })
 }
-
-export const userValidator = new UserValidator();

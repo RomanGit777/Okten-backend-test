@@ -18,8 +18,11 @@ type TokenPairType = {
     refreshToken: string;
 }
 
+type IRefresh = Pick<IToken, "refreshToken">
+
 export {
         IToken,
     ITokenPayload,
-    TokenPairType
+    TokenPairType,
+    IRefresh
 }

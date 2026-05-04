@@ -1,4 +1,5 @@
 import {Token} from "../models/token.model";
+import {IToken} from "../interfaces/token.interface";
 
 class TokenRepository {
 
@@ -12,6 +13,10 @@ class TokenRepository {
 
     public delete(refreshToken: string){
         return Token.deleteOne({ refreshToken });
+    }
+
+    public async findByParams(params: Partial<IToken>): Promise<IToken | null> {
+        return Token.findOne(params);
     }
 }
 export const tokenRepository = new TokenRepository();
