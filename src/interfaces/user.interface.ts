@@ -17,13 +17,26 @@ interface IUser extends IBase {
 
     isDeleted: boolean;
     isActive: boolean;
+
+    phone?: string;
+    company?: string;
+    info?: string;
+    documents?: string[];
 }
 
 type IUserDTO = Pick<IUser, "_id" | "name" | "surname" | "age" | "email" | "region" | "accountType" | "role" >;
 
 type IUserCreateDTO = Pick<IUser, "name" | "surname" | "age" | "email" | "password" | "region">
+type ISellerCreateDTO = Pick<IUser, "name" | "surname" | "age" | "email" | "password" | "region" | "documents" | "phone" | "company" | "info">
+
+
 type IUserUpdateDTO = Pick<IUser, "name" | "surname" | "age" | "region">
 
+
 export {
-    IUserCreateDTO, IUserUpdateDTO, IUser, IUserDTO
+    IUserCreateDTO,
+    IUserUpdateDTO,
+    IUser,
+    IUserDTO,
+    ISellerCreateDTO
 }

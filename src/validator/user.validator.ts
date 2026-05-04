@@ -7,8 +7,21 @@ export class UserValidator {
     private static surname = joi.string().regex(RegexEnum.NAME);
     private static age = joi.number();
     private static region = joi.string();
+    private static phone = joi.string() // add regex for phone nums?
+    private static company = joi.string()
+    private static info = joi.string()
+    private static documents = joi.string()
 
     public static create = joi.object({
+        name: this.nameSchema.required(),
+        surname: this.surname.required(),
+        age: this.age.required(),
+        email: this.email.required(),
+        password: this.password.required(),
+        region: this.region.required(),
+    })
+
+    public static createSeller = joi.object({
         name: this.nameSchema.required(),
         surname: this.surname.required(),
         age: this.age.required(),
