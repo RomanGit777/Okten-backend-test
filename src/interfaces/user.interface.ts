@@ -29,6 +29,7 @@ type IUserDTO = Pick<IUser, "_id" | "name" | "surname" | "age" | "email" | "regi
 type IUserCreateDTO = Pick<IUser, "name" | "surname" | "age" | "email" | "password" | "region">
 type ISellerCreateDTO = Pick<IUser, "name" | "surname" | "age" | "email" | "password" | "region" | "documents" | "phone" | "company" | "info">
 
+type internalUserCreateType = IUserCreateDTO & Partial<ISellerCreateDTO> & { role: RoleEnum }
 
 type IUserUpdateDTO = Pick<IUser, "name" | "surname" | "age" | "region">
 
@@ -38,5 +39,6 @@ export {
     IUserUpdateDTO,
     IUser,
     IUserDTO,
-    ISellerCreateDTO
+    ISellerCreateDTO,
+    internalUserCreateType
 }

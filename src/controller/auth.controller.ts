@@ -1,5 +1,5 @@
 import {NextFunction, Request, Response} from "express";
-import {IUserCreateDTO} from "../interfaces/user.interface";
+import {ISellerCreateDTO, IUserCreateDTO} from "../interfaces/user.interface";
 import {authService} from "../services/auth.service";
 import {IAuth} from "../interfaces/IAuth";
 import {StatusCodesEnum} from "../enums/status-codes.enum";
@@ -16,6 +16,16 @@ class AuthController {
             const data = await authService.register(body);
             res.status(StatusCodesEnum.CREATED).json(data);
         } catch (e){
+            next(e);
+        }
+    }
+
+    public async registerSeller(req:Request, res:Response, next:NextFunction) {
+        try {
+            const body = req.body as ISellerCreateDTO;
+            const data = await authService.registerSeller(body);
+            res.status(StatusCodesEnum.CREATED).json(data);
+        } catch (e) {
             next(e);
         }
     }

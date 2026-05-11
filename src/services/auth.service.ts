@@ -1,4 +1,4 @@
-import {IUserCreateDTO, IUserDTO} from "../interfaces/user.interface";
+import {internalUserCreateType, ISellerCreateDTO, IUserCreateDTO, IUserDTO} from "../interfaces/user.interface";
 import {userService} from "./user.service";
 import {passwordService} from "./password.service";
 import {TokenPairType} from "../interfaces/token.interface";
@@ -9,18 +9,34 @@ import {userRepository} from "../repositories/user.repository";
 import {ApiError} from "../errors/api.error";
 import {StatusCodesEnum} from "../enums/status-codes.enum";
 import {userMapper} from "../mappers/user.mapper";
+import {RoleEnum} from "../enums/role.enum";
 
 class AuthService {
 
     public async register(user: IUserCreateDTO): Promise<{ user: IUserDTO, tokens: TokenPairType }> {
-            await userService.isEmailExists(user.email);
-            const hashedPassword = await passwordService.hashPassword(user.password);
-            const newUser = await userService.create({...user, password: hashedPassword});
+     return this._createUserWithRole(user, RoleEnum.BUYER);
+    }
 
-            const tokens = tokenService.generateTokens({userId: newUser._id, role: newUser.role, accountType: newUser.accountType});
-            await tokenRepository.save(newUser._id, tokens.refreshToken)
+    public async registerSeller(user: ISellerCreateDTO): Promise<{ user: IUserDTO, tokens: TokenPairType }> {
+     return this._createUserWithRole(user, RoleEnum.SELLER);
+    }
 
-            return { user: userMapper.toDTO(newUser), tokens};
+    private async _createUserWithRole(dto: IUserCreateDTO | ISellerCreateDTO, role: RoleEnum){
+        await userService.isEmailExists(dto.email);
+        const hashedPassword = await passwordService.hashPassword(dto.password);
+
+        const data: internalUserCreateType = {
+            ...dto,
+            password: hashedPassword,
+            role,
+        };
+
+        const newUser = await userService.create(data);
+
+        const tokens = tokenService.generateTokens({userId: newUser._id, role: newUser.role, accountType: newUser.accountType});
+        await tokenRepository.save(newUser._id, tokens.refreshToken);
+
+        return { user: userMapper.toDTO(newUser), tokens};
     }
 
     public async login(DTO: IAuth): Promise<{user: IUserDTO, tokens: TokenPairType}>{
